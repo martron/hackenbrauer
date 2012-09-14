@@ -30,8 +30,8 @@ end
 
 def move_to_random_position(id, speed)
   # speed: time in milliseconds to take to move to this position
-  x = (rand() - 0.5) * 8
-  y = (rand() - 0.5) * 8
+  x = (rand() - 0.5) * 16
+  y = (rand() - 0.5) * 16
   @client.send( OSC::Message.new("/rect/#{id}/moveTo", x, y, speed) )
 end
 
@@ -43,8 +43,14 @@ def colour_to_random(id, speed)
   @client.send( OSC::Message.new("/rect/#{id}/colourTo", red, green, blue, alpha, speed) )
 end
 
+def size_to_random(id, speed)
+  width = rand() * 3
+  height = rand() * 3
+  @client.send( OSC::Message.new( "/rect/#{id}/sizeTo", width, height, speed ))
+end
+
 #@server = OSC::EMServer.new( 3333 )
-@client = OSC::Client.new( 'localhost', 7220 )
+@client = OSC::Client.new( '10.2.1.133', 7220 ) #10.2.1.133 = DJ Localhost
 
 #@server.add_method '/greeting' do | message |
 #  puts "Received #{message.to_a}"
@@ -65,6 +71,7 @@ while(1)
   sleep interval
   move_to_random_position(0, interval * 1000)
   colour_to_random(0, interval * 1000)
+  size_to_random(0, interval * rand() * 500)
   #random_size(0)
 
   move_to_random_position(1, interval * 1000)

@@ -11,9 +11,9 @@ def random_coords(id)
 end
 
 def random_colour(id)
-  red = rand()
-  green = rand()
-  blue = rand()
+  red = rand() * 4
+  green = rand() * 4
+  blue = rand() * 4
   alpha = rand()
   @client.send( OSC::Message.new( "/rect/#{id}/red" , red ))
   @client.send( OSC::Message.new( "/rect/#{id}/green" , green ))
